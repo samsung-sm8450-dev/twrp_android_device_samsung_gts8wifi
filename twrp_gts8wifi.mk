@@ -9,11 +9,16 @@
 $(call inherit-product, $(SRC_TARGET_DIR)/product/core_64_bit.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
 
+# Enable project quotas and casefolding for emulated storage without sdcardfs
+$(call inherit-product, $(SRC_TARGET_DIR)/product/emulated_storage.mk)
+
 # Inherit some common TWRP stuff.
 $(call inherit-product, vendor/twrp/config/common.mk)
 
 # Inherit from gts8wifi device
 $(call inherit-product, device/samsung/gts8wifi/device.mk)
+
+PRODUCT_COPY_FILES += $(call find-copy-subdir-files,*,device/samsung/gts8wifi/recovery/root,recovery/root)
 
 PRODUCT_DEVICE := gts8wifi
 PRODUCT_NAME := twrp_gts8wifi

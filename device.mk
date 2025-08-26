@@ -6,3 +6,15 @@
 #
 
 LOCAL_PATH := device/samsung/gts8wifi
+
+# Charger
+PRODUCT_PACKAGES += \
+    charger_res_images
+
+# Dynamic partitions
+PRODUCT_USE_DYNAMIC_PARTITIONS := true
+
+# fastbootd
+PRODUCT_PACKAGES += \
+    android.hardware.fastboot@1.0-impl-mock \
+    fastbootd
