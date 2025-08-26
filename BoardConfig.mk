@@ -10,6 +10,10 @@ DEVICE_PATH := device/samsung/gts8wifi
 # For building with minimal manifest
 ALLOW_MISSING_DEPENDENCIES := true
 
+# PRODUCT_COPY_FILES directives.
+BUILD_BROKEN_ELF_PREBUILT_PRODUCT_COPY_FILES := true
+DISABLE_ARTIFACT_PATH_REQUIREMENTS := true
+
 AB_OTA_UPDATER := false
 
 # Architecture
@@ -42,6 +46,14 @@ TARGET_USES_UEFI := true
 TARGET_SCREEN_DENSITY := 340
 
 # Kernel
+BOARD_KERNEL_IMAGE_NAME := Image
+BOARD_INCLUDE_DTB_IN_BOOTIMG := true
+TARGET_PREBUILT_KERNEL := $(DEVICE_PATH)/prebuilt/kernel
+TARGET_PREBUILT_DTB := $(DEVICE_PATH)/prebuilt/dtb.img
+BOARD_INCLUDE_DTB_IN_BOOTIMG := true
+BOARD_PREBUILT_DTBOIMAGE := $(DEVICE_PATH)/prebuilt/dtbo.img
+BOARD_INCLUDE_RECOVERY_DTBO := true
+
 BOARD_BOOTIMG_HEADER_VERSION := 2
 BOARD_KERNEL_BASE := 0x00000000
 BOARD_KERNEL_CMDLINE := video=vfb:640x400,bpp=32,memsize=3072000 printk.devkmsg=on firmware_class.path=/vendor/firmware_mnt/image console=null bootconfig androidboot.hardware=qcom hardware=qcom androidboot.memcg=1 androidboot.usbcontroller=a600000.dwc3 androidboot.init_fatal_panic=true androidboot.selinux=permissive loop.max_part=7
@@ -51,25 +63,10 @@ BOARD_RAMDISK_OFFSET := 0x02000000
 BOARD_KERNEL_SECOND_OFFSET := 0x00000000
 BOARD_KERNEL_TAGS_OFFSET := 0x01e00000
 BOARD_DTB_OFFSET := 0x01f00000
-BOARD_MKBOOTIMG_ARGS := --kernel_offset $(BOARD_KERNEL_OFFSET) --ramdisk_offset $(BOARD_RAMDISK_OFFSET) 
+BOARD_MKBOOTIMG_ARGS += --kernel_offset $(BOARD_KERNEL_OFFSET) --ramdisk_offset $(BOARD_RAMDISK_OFFSET)
 BOARD_MKBOOTIMG_ARGS += --tags_offset $(BOARD_KERNEL_TAGS_OFFSET) --second_offset $(BOARD_KERNEL_SECOND_OFFSET)
-BOARD_MKBOOTIMG_ARGS += --header_version $(BOARD_BOOT_HEADER_VERSION) --pagesize $(BOARD_KERNEL_PAGESIZE)
-BOARD_KERNEL_IMAGE_NAME := Image
-BOARD_INCLUDE_DTB_IN_BOOTIMG := true
-BOARD_KERNEL_SEPARATED_DTBO := true
-TARGET_KERNEL_CONFIG := gts8wifi_defconfig
-TARGET_KERNEL_SOURCE := kernel/samsung/sm8450
-
-# Kernel - prebuilt
-TARGET_FORCE_PREBUILT_KERNEL := true
-ifeq ($(TARGET_FORCE_PREBUILT_KERNEL),true)
-TARGET_PREBUILT_KERNEL := $(DEVICE_PATH)/prebuilt/kernel
-TARGET_PREBUILT_DTB := $(DEVICE_PATH)/prebuilt/dtb.img
-BOARD_MKBOOTIMG_ARGS += --dtb $(TARGET_PREBUILT_DTB) --dtb_offset $(BOARD_DTB_OFFSET)
-BOARD_INCLUDE_DTB_IN_BOOTIMG := true
-BOARD_PREBUILT_DTBOIMAGE := $(DEVICE_PATH)/prebuilt/dtbo.img
-endif
-
+BOARD_MKBOOTIMG_ARGS += --header_version $(BOARD_BOOTIMG_HEADER_VERSION) --pagesize $(BOARD_KERNEL_PAGESIZE)
+BOARD_MKBOOTIMG_ARGS += --dtb $(TARGET_PREBUILT_DTB) --dtb_offset $(BOARD_DTB_OFFSET) --board "SRPUH27C002"
 BOARD_CUSTOM_BOOTIMG_MK := device/samsung/gts8wifi/bootimg.mk
 
 # Partitions
@@ -90,7 +87,6 @@ BOARD_SAMSUNG_DYNAMIC_PARTITIONS_SIZE := 11135877120
 TARGET_BOARD_PLATFORM := taro
 
 # Recovery
-BOARD_INCLUDE_RECOVERY_DTBO := true
 BOARD_HAS_NO_SELECT_BUTTON := true
 TARGET_RECOVERY_PIXEL_FORMAT := RGBX_8888
 TARGET_USERIMAGES_USE_EXT4 := true
