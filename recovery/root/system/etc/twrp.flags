@@ -36,7 +36,8 @@ vendor_dlkm	/vendor_dlkm	ext4						wait,logical,first_stage_mount
 /dtbo		emmc		/dev/block/bootdevice/by-name/dtbo		flags=backup=1;flashimg;display="Dtbo"
 /optics_image	emmc		/dev/block/bootdevice/by-name/optics		flags=backup=1;flashimg;display="Optics Image"
 /prism_image	emmc		/dev/block/bootdevice/by-name/prism		flags=backup=1;flashimg;display="Prism Image"
-/vbmeta_system	emmc		/dev/block/bootdevice/by-name/vbmeta_system
+/vbmeta		emmc            /dev/block/bootdevice/by-name/vbmeta            flags=backup=1;flashimg;display="Vbmeta Image"
+/vbmeta_system	emmc		/dev/block/bootdevice/by-name/vbmeta_system     flags=backup=1;flashimg;display="Vbmeta System Image"
 /vendor_boot	emmc		/dev/block/bootdevice/by-name/vendor_boot	flags=backup=1;flashimg;display="Vendor Boot"
 /vbmeta_samsung	emmc		/dev/block/bootdevice/by-name/vbmeta_samsung
 /imagefv	emmc		/dev/block/bootdevice/by-name/imagefv
