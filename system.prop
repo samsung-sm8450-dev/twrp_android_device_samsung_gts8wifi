@@ -1,4 +1,4 @@
-ro.display.series=Samsung Tab S8 5G
+ro.display.series=Samsung Tab S8
 ro.product.board=taro
 ro.board.platform=taro
 sys.usb.controller=a600000.dwc3
